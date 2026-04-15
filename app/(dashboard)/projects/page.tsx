@@ -19,7 +19,7 @@ function ProjectsContent() {
    const [viewMode, setViewMode] = useState<"list" | "grid">("list"); // Default per requirements
 
    const [isModalOpen, setIsModalOpen] = useState(false);
-   const [newProject, setNewProject] = useState({ name: "", clientName: "", description: "", totalValue: 0, status: "active" });
+   const [newProject, setNewProject] = useState({ name: "", clientName: "", description: "", totalValue: 0, status: "active", startDate: "" });
 
    const handleCreateProject = async (e: React.FormEvent) => {
       e.preventDefault();
@@ -34,7 +34,7 @@ function ProjectsContent() {
             toast.success("Project created successfully");
             setProjects([data.data, ...projects]);
             setIsModalOpen(false);
-            setNewProject({ name: "", clientName: "", description: "", totalValue: 0, status: "active" });
+            setNewProject({ name: "", clientName: "", description: "", totalValue: 0, status: "active", startDate: "" });
          } else {
             toast.error(data.error || "Failed to create project");
          }
@@ -228,6 +228,10 @@ function ProjectsContent() {
                <div>
                   <label className="block text-sm font-medium mb-1">Project Name *</label>
                   <input required type="text" className="w-full bg-background border border-border rounded-xl px-3 py-2 text-sm focus:border-primary outline-none" value={newProject.name} onChange={e => setNewProject({ ...newProject, name: e.target.value })} />
+               </div>
+               <div>
+                  <label className="block text-sm font-medium mb-1">Start Date *</label>
+                  <input required type="date" className="w-full bg-background border border-border rounded-xl px-3 py-2 text-sm focus:border-primary outline-none" value={newProject.startDate} onChange={e => setNewProject({ ...newProject, startDate: e.target.value })} />
                </div>
                <div>
                   <label className="block text-sm font-medium mb-1">Client Name</label>

@@ -1,4 +1,4 @@
-﻿import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
 import { Project } from "@/models";
 import { auth } from "@/lib/auth";
@@ -30,6 +30,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json();
     if (!body.name) return NextResponse.json({ success: false, error: "Project name is required" }, { status: 400 });
+    if (!body.startDate) return NextResponse.json({ success: false, error: "Start date is required" }, { status: 400 });
 
     await connectDB();
     const project = await Project.create({

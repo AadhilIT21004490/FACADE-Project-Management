@@ -1,4 +1,4 @@
-﻿import mongoose, { Schema, Document, Model, Types } from "mongoose";
+import mongoose, { Schema, Document, Model, Types } from "mongoose";
 
 export type ProjectStatus = "active" | "completed" | "on-hold";
 
@@ -22,7 +22,7 @@ const ProjectSchema = new Schema<IProject>(
     name: { type: String, required: true, trim: true },
     clientName: { type: String, trim: true },
     description: { type: String },
-    startDate: { type: Date },
+    startDate: { type: Date, required: true },
     endDate: { type: Date },
     status: {
       type: String,

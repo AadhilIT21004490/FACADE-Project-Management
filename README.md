@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏛️ Facade - Project Management Platform
+> Next-generation SaaS platform for client project orchestration, financial tracking, and encrypted credential management. 
 
-## Getting Started
+Facade is a powerful, glassmorphism-styled project management application built on Next.js. It empowers agencies and freelancers to fully track their project lifecycles, ledger payments, host documents, and securely store sensitive client credentials in an AES-256-GCM encrypted vault.
 
-First, run the development server:
+## ✨ Features
+- **📊 Global Dashboard**: Real-time metrics on revenue, active projects, and system-wide activity logging.
+- **📂 Unified Project Library**: Dynamic "Grid" and "List" views of all active, completed, or on-hold projects mapped with linear progress indicators.
+- **💰 Financial Ledgers**: Automated tracking of contract values, partial payments, and overdue balances.
+- **🛡️ Secure Credential Vault**: End-to-end AES-256-GCM encryption for storing Client AWS, GitHub, or server credentials. Keys are strictly decrypted on-demand via the server to ensure maximum security. 
+- **☁️ Cloud Document Hosting**: Built-in integration with Cloudinary for fast, reliable document hosting and sharing.
+- **🚀 Time-To-Live (TTL) Notifications**: Automated MongoDB TTL indexing to natively prune 30-day old records without impacting server thread memory.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🛠️ Technology Stack
+- **Framework:** Next.js (App Router)
+- **Styling:** Tailwind CSS (Custom Glassmorphism Tokens & Modals)
+- **Database:** MongoDB Atlas (Mongoose)
+- **Authentication:** NextAuth v5 (Auth.js) - JWT + Credentials Strategy
+- **Encryption:** Node.js native `crypto` module (AES-256-GCM / Base64 Keys)
+- **File Storage:** Cloudinary API
+
+## 📋 Environment Variables
+Create a `.env.local` directly in the root directory and configure the following required secret keys:
+
+```env
+# MongoDB Connection String
+MONGODB_URI=mongodb+srv://<USER>:<PASS>@cluster.mongodb.net/facade
+
+# NextAuth v5 Secret & URL (Run `npx auth secret` to generate an automated secure key)
+AUTH_SECRET="your-32-byte-secret"
+NEXTAUTH_URL="http://localhost:3000"
+
+# Cloudinary Integration (Fetch these from your Cloudinary Developer console)
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+# AES-256-GCM Vault Encryption Key (Must be EXACTLY 32 Bytes encoded in Base64)
+# Tip: Generate by running `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` in your terminal.
+VAULT_ENCRYPTION_KEY="your-generated-base64-key"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Getting Started
+```bash
+# 1. Clone the repository
+git clone https://github.com/AadhilIT21004490/FACADE-Project-Management.git
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# 2. Navigate into your directory
+cd "FACADE-Project-Management"
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 3. Install NPM dependencies
+npm install
 
-## Learn More
+# 4. Start the development server
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open `http://localhost:3000` with your browser to see the result.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔐 Managing Access / Security Notice
+This application utilizes internal identity management. Root accounts should be tightly controlled as the DB credentials allow decrypting the Vault. Never commit your `.env.local` variables directly to version control.

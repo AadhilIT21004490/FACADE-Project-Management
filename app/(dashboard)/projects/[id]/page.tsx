@@ -3,13 +3,14 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { use } from "react";
-import { ArrowLeft, LayoutDashboard, CalendarClock, DollarSign, Files, Shield } from "lucide-react";
+import { ArrowLeft, LayoutDashboard, CalendarClock, DollarSign, Files, Shield, GitBranch as GitBranchIcon } from "lucide-react";
 import Link from "next/link";
 import { OverviewTab } from "./components/OverviewTab";
 import { DeadlinesTab } from "./components/DeadlinesTab";
 import { PaymentsTab } from "./components/PaymentsTab";
 import { DocumentsTab } from "./components/DocumentsTab";
 import { CredentialsTab } from "./components/CredentialsTab";
+import { GithubTab } from "./components/GithubTab";
 
 const tabs = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
@@ -17,6 +18,7 @@ const tabs = [
   { id: "payments", label: "Payments", icon: DollarSign },
   { id: "documents", label: "Documents", icon: Files },
   { id: "credentials", label: "Vault", icon: Shield },
+  { id: "commits", label: "Commits", icon: GitBranchIcon },
 ];
 
 function ProjectDetailsContent({ params }: { params: Promise<{ id: string }> }) {
@@ -31,6 +33,10 @@ function ProjectDetailsContent({ params }: { params: Promise<{ id: string }> }) 
   
   const [project, setProject] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const handleProjectUpdate = (updated: any) => {
+    setProject(updated);
+  };
 
   useEffect(() => {
     fetch(`/api/projects/${projectId}`)
@@ -105,6 +111,7 @@ function ProjectDetailsContent({ params }: { params: Promise<{ id: string }> }) 
         {currentTab === "payments" && <PaymentsTab project={project} />}
         {currentTab === "documents" && <DocumentsTab projectId={project._id} />}
         {currentTab === "credentials" && <CredentialsTab projectId={project._id} />}
+        {currentTab === "commits" && <GithubTab project={project} onProjectUpdate={handleProjectUpdate} />}
       </div>
     </div>
   );

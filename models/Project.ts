@@ -13,6 +13,8 @@ export interface IProject extends Document {
   totalValue: number;
   paidAmount: number;
   userId: Types.ObjectId;
+  githubRepo?: string;
+  githubToken?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -33,6 +35,8 @@ const ProjectSchema = new Schema<IProject>(
     totalValue: { type: Number, default: 0, min: 0 },
     paidAmount: { type: Number, default: 0, min: 0 },
     userId: { type: Schema.Types.ObjectId, ref: "User", required: true, index: true },
+    githubRepo: { type: String, trim: true },
+    githubToken: { type: String },
   },
   { timestamps: true }
 );
